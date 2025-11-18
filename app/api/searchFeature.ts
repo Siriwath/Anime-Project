@@ -1,0 +1,1 @@
+// This is the file to handle the api call to a specific tag ie. Anime Name, Genere, Ratings etc.
