@@ -21,19 +21,6 @@ export async function POST(req: Request) {
       format: format || undefined,
     };
 
-    // If the user input a name this is stored in the database
-        if (name) {
-      await client.connect();
-      const db = client.db("animeDB");
-      const collection = db.collection("searchedNames");
-
-      await collection.updateOne(
-        { name },
-        { $setOnInsert: { name, searchedAt: new Date() } },
-        { upsert: true }
-      );
-    }
-
     // Stuffy stuff. This is how the result will look it returns it as a json object so you still need to extract the data inside. 
     // I think it makes the frontend easier lmk
     // If you want to access stuff it will be (if you set what this returns to data)
@@ -73,6 +60,26 @@ export async function POST(req: Request) {
     });
 
     const data = await response.json();
+
+
+    // This is just for the database stuff below
+    const animeList = data?.data?.Page?.media || [];
+
+    // Stores valid anime names in the database
+    if (animeList.length > 0) {
+      const validatedName = animeList[0].title.romaji; // first match
+
+      await client.connect();
+      const db = client.db("animeDB");
+      const collection = db.collection("searchedNames");
+
+      // Duplicate bad
+      await collection.updateOne(
+        { name: validatedName },
+        { $setOnInsert: { name: validatedName, searchedAt: new Date() } },
+        { upsert: true }
+      );
+    }
 
     //  Light work no reaction | Return the stuffy stuff (List of up to 10 per page of matching search)
     return NextResponse.json(data);
