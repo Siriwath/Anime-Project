@@ -1,6 +1,11 @@
 // This is the file to handle the api call to a specific tag ie. Anime Name, Genere, Ratings etc.
-const aniLink = process.env.API_LINK!; 
 import { NextResponse } from "next/server";
+import { MongoClient } from "mongodb";
+
+const aniLink = process.env.API_LINK!; 
+const uri = process.env.DB_URI!;
+const client = new MongoClient(uri);
+
 
 export async function POST(req: Request) {
   try {
@@ -15,6 +20,19 @@ export async function POST(req: Request) {
       season: season || undefined,
       format: format || undefined,
     };
+
+    // If the user input a name this is stored in the database
+        if (name) {
+      await client.connect();
+      const db = client.db("animeDB");
+      const collection = db.collection("searchedNames");
+
+      await collection.updateOne(
+        { name },
+        { $setOnInsert: { name, searchedAt: new Date() } },
+        { upsert: true }
+      );
+    }
 
     // Stuffy stuff. This is how the result will look it returns it as a json object so you still need to extract the data inside. 
     // I think it makes the frontend easier lmk
@@ -56,7 +74,7 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    //  Light work no reaction / Return the stuffy stuff (List of up to 10 per page of matching search)
+    //  Light work no reaction | Return the stuffy stuff (List of up to 10 per page of matching search)
     return NextResponse.json(data);
   // Explodes if theres an error
 } catch (error) {
@@ -65,5 +83,8 @@ export async function POST(req: Request) {
     } else {
       return NextResponse.json({ error: "Unknown error occurred" }, { status: 500 });
     }
+  }
+  finally{
+    await client.close();
   }
 }
