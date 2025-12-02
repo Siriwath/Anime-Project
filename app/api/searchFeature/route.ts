@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     // I think it makes the frontend easier lmk
     // If you want to access stuff it will be (if you set what this returns to data)
     // To access things for example it wil be data.data.Page.media gives you the list of variables so like set that to animeList or smtn.
-    // So after that you set it to what i said ^, i forgot the fucnctions but .title.romanji = name, .description = DUHHH, .generes = Array, averageScore, season, format
+    // So after that you set it to what i said ^, i forgot the fucnctions but .title.english = name, .description = DUHHH, .generes = Array, averageScore, season, format
     const query = `
       query ($search: String, $genre: String, $averageScore: Int, $season: MediaSeason, $format: MediaFormat) {
         Page(perPage: 10) {
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
     // Stores valid anime names in the database
     if (animeList.length > 0) {
-      const validatedName = animeList[0].title.romaji; // first match
+      const validatedName = animeList[0].title.english; // first match
 
       await client.connect();
       const db = client.db("animeDB");
@@ -95,3 +95,8 @@ export async function POST(req: Request) {
     await client.close();
   }
 }
+
+
+// Random AI generated call to test the code $response = Invoke-RestMethod -Uri "http://localhost:3000/api/searchFeature" 
+// -Method POST -ContentType "application/json" -Body '{"name":"Naruto"}'
+// $response | ConvertTo-Json -Depth 5
