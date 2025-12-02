@@ -97,6 +97,5 @@ export async function POST(req: Request) {
 }
 
 
-// Random AI generated call to test the code $response = Invoke-RestMethod -Uri "http://localhost:3000/api/searchFeature" 
-// -Method POST -ContentType "application/json" -Body '{"name":"Naruto"}'
-// $response | ConvertTo-Json -Depth 5
+// (Invoke-WebRequest -Uri "http://localhost:3000/api/searchFeature" -Method POST -Body '{"name":"Naruto"}' -ContentType "application/json").Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+
