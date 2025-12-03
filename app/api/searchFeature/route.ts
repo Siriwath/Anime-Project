@@ -69,17 +69,18 @@ export async function POST(req: Request) {
     if (animeList.length > 0) {
       const validatedName = animeList[0].title.english; // first match
 
-      await client.connect();
-      const db = client.db("animeDB");
-      const collection = db.collection("searchedNames");
+      if (validatedName){
+        await client.connect();
+        const db = client.db("animeDB");
+        const collection = db.collection("searchedNames");
 
-      // Duplicate bad
-      await collection.updateOne(
-        { name: validatedName },
-        { $setOnInsert: { name: validatedName, searchedAt: new Date() } },
-        { upsert: true }
+        // Duplicate bad
+        await collection.updateOne(
+          { name: validatedName },
+          { $setOnInsert: { name: validatedName, searchedAt: new Date() } },
+          { upsert: true }
       );
-    }
+    }};
 
     //  Light work no reaction | Return the stuffy stuff (List of up to 10 per page of matching search)
     return NextResponse.json(data);

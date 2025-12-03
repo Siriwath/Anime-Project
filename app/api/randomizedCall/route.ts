@@ -15,11 +15,46 @@ export async function POST(){
         const db = client.db("animeDB");
         const collection = db.collection("searchedNames");
 
-        const results = await collection.find({}, { projection: { _id: 0, name: 1 } }).toArray();
+        const results = await collection.aggregate([{ $sample: { size: 10} }, { $project: { _id: 0, name: 1}}]).toArray();
+        const names = results.map(item => item.name);
         
-        return NextResponse.json(results);
+        async function randomTen(name : string){
+            const query = `
+                query ($search: String) {
+                    Page(perPage: 10) {
+                        media(search: $search, type: ANIME) {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        description
+                        genres
+                        averageScore
+                        season
+                        format
+                        }    
+                    }
+                }
+            `;
+            const body = JSON.stringify({
+                query, variables: { search : name },
+            });
+            const res = await fetch(aniLink, {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body,
+            });
+            
+            const json = await res.json();
 
+            return json?.data?.Page?.media?.[0] || null;
+        }
 
+        const animeList = await Promise.all(names.map(randomTen));
+        const animeRevised = animeList.filter(item => item !== null);
+
+        return NextResponse.json(animeRevised);
     }
     catch (e) {
         console.error(e);
