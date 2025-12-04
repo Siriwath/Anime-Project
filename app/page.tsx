@@ -15,7 +15,7 @@ export default function Explore() {
   useEffect(() => {
     async function fetchTopAnime() {
       try {
-        const res = await fetch("/api/searchFeature", {
+        const res = await fetch("/api/randomizedCall", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -38,29 +38,23 @@ export default function Explore() {
       }
     }
 
-    // fetchTopAnime();
+    fetchTopAnime();
   }, []);
 
-  // if (loading) return <h3>Loading top anime...</h3>;
+  if (loading) return <h3>Loading top anime...</h3>;
 
-  // console.log(animeList);
+  console.log(animeList);
 
   return (
-    // <div>
-    //   <h3>Top 10 Anime</h3>
+    <div>
+      <h3>Top 10 Anime</h3>
 
-    //   <div className="anime-grid">
-    //     {animeList.map((anime) => (
-    //       <AnimeCard key={anime.id} anime={anime} />
-    //     ))}
-    //   </div>
-    // </div>
-    <>
-      <Navbar></Navbar>
-      <SearchBar></SearchBar>
+      <div className="anime-grid">
+        {animeList.map((anime) => (
+          <AnimeCard key={anime.id} anime={anime} />
+        ))}
+      </div>
+    </div>
 
-      <AnimeCard></AnimeCard>
-      <AnimeSaved></AnimeSaved>
-    </>
   );
 }
