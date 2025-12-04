@@ -1,8 +1,11 @@
 function AnimeSaved() {
     return (
-        <div className="animeSaved">
-            <img></img>
-            <div className="info">
+        <div className="flex flex-row justify-between w-250 h-auto">
+            <img
+                src=""
+                className="w-100 h-60 border-black border-1 rounded-md"
+            />
+            <div className="flex flex-col p-10 w-150">
                 <h2>anime title</h2>
                 <h4>genres</h4>
                 <p>
