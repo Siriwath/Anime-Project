@@ -1,3 +1,4 @@
+
 import AnimeCard from "../components/AnimeCard"
 import AnimeSaved from "../components/AnimeSaved"
 import SearchBar from "../components/SearchBar"
@@ -10,7 +11,7 @@ export default function Watchlist() {
         <Navbar></Navbar>
         <h3>My Watchlist</h3>
         <div>
-            <AnimeSaved></AnimeSaved>
+            <SearchBar></SearchBar>
         </div>
         </>
     );
