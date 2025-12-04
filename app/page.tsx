@@ -29,8 +29,13 @@ export default function Explore() {
 
         const data = await res.json();
 
-        const list: Anime[] = data || [];
-        setAnimeList(list);
+        if (!Array.isArray(data)) {
+          console.error("Unexpected API response:", data);
+          setAnimeList([]);
+        } else {
+          setAnimeList(data);
+        }
+
       } catch (err) {
         console.error("Error loading anime:", err);
       } finally {
@@ -41,21 +46,31 @@ export default function Explore() {
     fetchTopAnime();
   }, []);
 
-  if (loading) return <h3>Loading top anime...</h3>;
-
-  console.log(animeList);
+  if (loading)
+    return (
+      <div className="bg-[#373E40] min-h-screen">
+        <Navbar />
+        <div className="my-25 mx-30">
+          <h3 className="text-6xl font-semibold text-white">AniWatch</h3>
+          <h4 className="text-lg font-normal text-white my-2">The comprehensive anime catalog</h4>
+          <div className="flex flex-wrap flex-row gap-5 my-20">
+            <p className="text-neutral-300 text-sm">loading anime..</p>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="my-25 mx-50">
-          <h3 className="text-4xl font-semibold">website name</h3>
-
-          <div className="flex flex-wrap flex-row">
-            {animeList.map((anime) => (
-              <AnimeCard key={anime.id} anime={anime} />
-            ))}
-          </div>
+    <div className="bg-[#373E40] min-h-screen">
+      <Navbar />
+      <div className="my-25 mx-30">
+        <h3 className="text-6xl font-semibold text-white">AniWatch</h3>
+        <h4 className="text-lg font-normal text-white my-2">The comprehensive anime catalog</h4>
+        <div className="flex flex-wrap flex-row gap-5 my-20">
+          {animeList.map((anime) => (
+            <AnimeCard key={anime.id} anime={anime} />
+          ))}
+        </div>
       </div>
     </div>
   );

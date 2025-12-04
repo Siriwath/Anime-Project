@@ -9,6 +9,7 @@ export interface Anime {
         extraLarge?: string;
         medium?: string;
     }
+    bannerImage?: string;
     description?: string;
     genres: string[];
     averageScore?: number;

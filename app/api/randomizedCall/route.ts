@@ -33,6 +33,7 @@ export async function POST(){
                         medium
                         color
                         }
+                        bannerImage
                         description
                         genres
                         averageScore
@@ -65,10 +66,11 @@ export async function POST(){
 
         return NextResponse.json(animeRevised);
     }
-    catch (e) {
+    catch (e: any) {
         console.error(e);
-        return NextResponse.json({ error: e.message }, { status: 500 });
-    } 
+        return NextResponse.json([], { status: 500 });
+    }
+
     finally {
         await client.close();
   }

@@ -35,22 +35,22 @@ export default function SearchBar() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex flex-row justify-between border border-black rounded-4xl px-5 py-2 w-[350px]">
+      <div className="flex flex-row justify-between border border-white rounded-4xl px-8 py-3 w-250 my-10">
         <input
-          className="focus:outline-none w-[300px]"
+          className="focus:outline-none w-[300px] text-white text-sm"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Search anime..."
         />
         <button
           onClick={() => searchFeature(name)}
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer text-white text-xs"
         >
           Search
         </button>
       </div>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className="text-neutral-200 text-sm">Loading...</p>}
 
       {results.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -59,81 +59,8 @@ export default function SearchBar() {
           ))}
         </div>
       ) : (
-        !loading && <p>No results found.</p>
+        !loading && <p className="text-neutral-200 text-sm">No results found.</p>
       )}
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-
-// import { useState } from "react";
-
-// interface SearchBarProps {
-//   onSearch: (query: {
-//     name?: string;
-//     genre?: string;
-//     averageScore?: number;
-//     season?: string;
-//     format?: string;
-//   }) => void;
-// }
-
-// function SearchBar({ }) {
-//     const [name, setName] = useState("");
-
-//     return (
-//         <div className="flex flex-row justify-between border-1 border-black rounded-4xl px-5 py-2 w-350">
-//             <input
-//                 className="focus:outline-none w-300"
-//                 value={name}
-//                 onChange={(e) => setName(e.target.value)}
-//                 placeholder="Search anime..."
-//             />
-
-//             {/* <button onClick={() => onSearch({ name })}>Search</button> */}
-//             <button className="hover:cursor-pointer">
-//               Search
-//             </button>
-//         </div>
-//     );
-// }
-
-// export default SearchBar;

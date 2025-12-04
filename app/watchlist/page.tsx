@@ -7,12 +7,11 @@ import Navbar from "../components/Navbar";
 
 export default function Watchlist() {
     return(
-        <>
-        <Navbar></Navbar>
-        <h3>My Watchlist</h3>
-        <div>
-            <SearchBar></SearchBar>
+        <div className="bg-[#373E40]">
+            <Navbar></Navbar>
+            <div className="py-20">
+                <SearchBar></SearchBar>
+            </div>
         </div>
-        </>
     );
 }
