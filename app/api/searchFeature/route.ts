@@ -42,6 +42,12 @@ export async function POST(req: Request) {
               romaji
               english
             }
+            coverImage {
+              large
+              extraLarge
+              medium
+            }
+            bannerImage
             description
             genres
             averageScore
