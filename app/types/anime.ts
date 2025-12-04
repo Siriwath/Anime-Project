@@ -1,9 +1,14 @@
 export interface Anime {
     id: number,
     title: {
-        romanji?: string;
+        romaji?: string;
         english?: string;
     };
+    coverImage?: {
+        large?: string;
+        extraLarge?: string;
+        medium?: string;
+    }
     description?: string;
     genres: string[];
     averageScore?: number;
