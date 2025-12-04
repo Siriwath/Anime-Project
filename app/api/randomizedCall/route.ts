@@ -65,4 +65,4 @@ export async function POST(){
   }
 }
 
-// (Invoke-WebRequest -Uri "http://localhost:3000/api/randomAnime" -Method POST -ContentType "application/json").Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+// (Invoke-WebRequest -Uri "http://localhost:3000/api/randomizedCall" -Method POST -ContentType "application/json").Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
