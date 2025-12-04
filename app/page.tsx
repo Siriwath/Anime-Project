@@ -29,7 +29,7 @@ export default function Explore() {
 
         const data = await res.json();
 
-        const list: Anime[] = data?.data?.Page?.media || [];
+        const list: Anime[] = data || [];
         setAnimeList(list);
       } catch (err) {
         console.error("Error loading anime:", err);
@@ -47,14 +47,16 @@ export default function Explore() {
 
   return (
     <div>
-      <h3>Top 10 Anime</h3>
+      <Navbar></Navbar>
+      <div className="my-25 mx-50">
+          <h3 className="text-4xl font-semibold">website name</h3>
 
-      <div className="anime-grid">
-        {animeList.map((anime) => (
-          <AnimeCard key={anime.id} anime={anime} />
-        ))}
+          <div className="flex flex-wrap flex-row">
+            {animeList.map((anime) => (
+              <AnimeCard key={anime.id} anime={anime} />
+            ))}
+          </div>
       </div>
     </div>
-
   );
 }

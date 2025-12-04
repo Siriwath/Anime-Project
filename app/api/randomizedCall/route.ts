@@ -22,21 +22,27 @@ export async function POST(){
             const query = `
                 query ($search: String) {
                     Page(perPage: 10) {
-                        media(search: $search, type: ANIME) {
+                    media(search: $search, type: ANIME) {
                         id
                         title {
-                            romaji
-                            english
+                        romaji
+                        english
+                        }
+                        coverImage {
+                        large
+                        medium
+                        color
                         }
                         description
                         genres
                         averageScore
                         season
                         format
-                        }    
+                    }    
                     }
                 }
-            `;
+                `;
+
             const body = JSON.stringify({
                 query, variables: { search : name },
             });
@@ -52,7 +58,10 @@ export async function POST(){
         }
 
         const animeList = await Promise.all(names.map(randomTen));
-        const animeRevised = animeList.filter(item => item !== null);
+        const animeRevised = animeList
+            .filter(item => item !== null)
+            .filter((item, index, arr) => arr.findIndex(x => x.id === item.id) === index);
+
 
         return NextResponse.json(animeRevised);
     }

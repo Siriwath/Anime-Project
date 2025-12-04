@@ -8,9 +8,11 @@ export default function Watchlist() {
     return(
         <>
         <Navbar></Navbar>
-        <h3>My Watchlist</h3>
-        <div>
-            <AnimeSaved></AnimeSaved>
+        <div className="my-25 mx-50">
+            <h3 className="text-4xl font-semibold">My Watchlist</h3>
+            <div className="py-15">
+                <AnimeSaved></AnimeSaved>
+            </div>
         </div>
         </>
     );
